@@ -1,3 +1,4 @@
+import torch
 from torch import nn, save
 from torch.optim import Adam
 from data import Data
@@ -9,7 +10,7 @@ class Trainer:
     self.lock = threading.Lock()
     
   # Train the model
-  def train(self, data: Data, clf: Classifier, opt: Adam, loss_fn: nn.CrossEntropyLoss, epochs: int):
+  def train(self, data: Data, clf: Classifier, opt: Adam, loss_fn: nn.CrossEntropyLoss, device: torch.device, epochs: int):
     for epoch in range(epochs):
       # Acquire the lock
       # self.lock.acquire()
@@ -17,7 +18,7 @@ class Trainer:
       # Run the training loop
       def run(epoch: int):
         for batch, (images, labels) in enumerate(data.model):
-          images, labels = images.to(data.device), labels.to(data.device)
+          images, labels = images.to(device), labels.to(device)
 
           # Forward pass
           preds = clf(images)

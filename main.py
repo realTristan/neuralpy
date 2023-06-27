@@ -10,11 +10,14 @@ from trainer import Trainer
 # Install PyTorch with CUDA 11.1 (Faster)
 # pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
 
-# Get the data
-data: Data = Data()
+# Get the device
+device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Get the classifier
-clf: Classifier = Classifier().to(data.device)
+clf: Classifier = Classifier().to(device)
+
+# Get the data
+# data: Data = Data()
 
 # Create the optimizer
 # opt: Adam = Adam(clf.parameters(), lr=0.001)
@@ -33,6 +36,6 @@ clf.load("model.pth")
 
 # Test an image
 image: Image.Image = Image.open("images/2.jpg")
-image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(data.device)
+image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(device)
 pred: torch.Tensor = torch.argmax(clf(image_tensor))
 print(pred)

@@ -8,6 +8,3 @@ class Data:
     # Get the training dataset and define the model
     self.mnist: datasets.MNIST = datasets.MNIST(root="data", train=True, download=True, transform=ToTensor())
     self.model: DataLoader = DataLoader(self.mnist, batch_size=64, shuffle=True)
-
-    # Get the device
-    self.device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
