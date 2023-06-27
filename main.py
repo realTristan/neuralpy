@@ -65,19 +65,15 @@ if __name__ == "__main__":
     # Initialize the model
     # model: models.ResNet = models.resnet18().to(device) # This model is good for large images that need a lot of neurons in the layers
 
-    # Get the data
-    # data: torch.utils.data.DataLoader = Datasets.fromcsv("cats_dogs.csv", "datasets/cats_dogs_dataset")
-
     # Train the model and test it
+    # data: torch.utils.data.DataLoader = Datasets.fromcsv("cats_dogs.csv", "datasets/cats_dogs_dataset")
     # train(model, "models/cats_dogs_model.pth", data)
     # test_cats_dogs(model, "models/cats_dogs_model.pth", "datasets/cats_dogs_dataset/images/cats/1687885599774338700.jpg")
 
     # Initialize the model
     model: Model = Model(size=28).to(device) # Our custom model for small images
 
-    # Get the data
-    data: torch.utils.data.DataLoader = Datasets.mnist()
-
     # Train the model and test it
-    train(model, "models/numbers.pth", data)
-    test_numbers(model, "models/numbers.pth", "images/0.jpg")
+    # data: torch.utils.data.DataLoader = Datasets.mnist()
+    # train(model, "models/numbers.pth", data)
+    test_numbers(model, "models/numbers.pth", "datasets/MNIST/images/9.jpg")
