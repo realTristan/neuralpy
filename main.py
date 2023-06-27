@@ -7,11 +7,11 @@ from data import Data
 from classifier import Classifier
 from trainer import Trainer
 
+# Get the classifier
+clf: Classifier = Classifier() #.to("cuda")
+
 # Get the data
 data: Data = Data()
-
-# Get the classifier
-clf: Classifier = Classifier()  # .to("cuda")
 
 # Create the optimizer
 opt: Adam = Adam(clf.parameters(), lr=0.001)
@@ -20,16 +20,16 @@ opt: Adam = Adam(clf.parameters(), lr=0.001)
 loss_fn: nn.CrossEntropyLoss = nn.CrossEntropyLoss()
 
 # Train the model
-Trainer().train(data, clf, opt, loss_fn, 5)
+Trainer().train(data, clf, opt, loss_fn, 10)
 
 # Save the model
 Trainer.save(clf, "model.pth")
 
 # Load the model
-clf.load(clf, "model.pth")
+clf.load("model.pth")
 
 # Test an image
-image: Image.Image = Image.open("images/0.png")
-image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0)
+image: Image.Image = Image.open("images/0.jpg")
+image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0)#.to("cuda")
 pred: torch.Tensor = torch.argmax(clf(image_tensor))
 print(pred)
