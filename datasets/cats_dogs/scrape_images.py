@@ -50,11 +50,11 @@ if __name__ == "__main__":
         # Download dog images
         url: str = dogs_url(i + 1)
         images: bs4.element.ResultSet = get_images(url)
-        download_images(images, "datasets/cats_dogs_dataset/images/dogs/")
+        download_images(images, "datasets/cats_dogs/images/dogs/")
         print(f"Downloaded {len(images)} images from {url}")
 
         # Download cat images
         url: str = cats_url(i)
         images: bs4.element.ResultSet = get_images(url)
-        download_images(images, "datasets/cats_dogs_dataset/images/cats/")
+        download_images(images, "datasets/cats_dogs/images/cats/")
         print(f"Downloaded {len(images)} images from {url}")
