@@ -2,10 +2,10 @@ import torch, typing
 
 
 class Model(torch.nn.Module):
-    def __init__(self, size: int = 28) -> None:
+    def __init__(self, size: int = 28, channels: int = 3) -> None:
         super().__init__()
         self.model: torch.nn.Sequential = torch.nn.Sequential(
-            torch.nn.Conv2d(3, 32, 3),  # 3 input channel, 32 output channels, 3x3 kernel
+            torch.nn.Conv2d(channels, 32, 3),  # 3 input channel, 32 output channels, 3x3 kernel
             torch.nn.ReLU(),
             torch.nn.Conv2d(32, 64, 3),  # 32 input channels, 64 output channels, 3x3 kernel
             torch.nn.ReLU(),
