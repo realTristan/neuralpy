@@ -1,6 +1,9 @@
 # neuralpy ![Stars](https://img.shields.io/github/stars/realTristan/neuralpy?color=brightgreen) ![Watchers](https://img.shields.io/github/watchers/realTristan/neuralpy?label=Watchers)
 ![image](https://github.com/realTristan/neuralpy/assets/75189508/a0913bc8-7eb9-4db1-a2b8-8c696e5cfb86)
 
+# Preview
+![image](https://github.com/realTristan/neuralpy/assets/75189508/6acd4c95-7a3d-41aa-90db-22dc89296ff5)
+
 # License 
 MIT License
 
