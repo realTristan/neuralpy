@@ -1,4 +1,4 @@
-from data import Data
+from datasets import Datasets
 from model import Model
 from trainer import Trainer
 from image import Image
@@ -12,10 +12,7 @@ import torch, PIL, matplotlib.pyplot as plt
 device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Train the model
-def train(model, dataset: str, csv: str = None, path: str = None) -> None:
-    # Get the data
-    data: Data = Data(csv, path)
-
+def train(model, dataset: str, data) -> None:
     # Optimizer
     opt: torch.optim.Adam = torch.optim.Adam(model.parameters(), lr=0.001)
 
@@ -29,8 +26,8 @@ def train(model, dataset: str, csv: str = None, path: str = None) -> None:
     torch.save(model.state_dict(), dataset)
 
 
-# Test an image
-def test(model, dataset: str, image: str) -> None:
+# Test the numbers dataset
+def test_numbers(model, dataset: str, image: str) -> None:
     # Load the model
     with open(dataset, "rb") as f:
         model.load_state_dict(torch.load(f))
@@ -46,11 +43,11 @@ def test(model, dataset: str, image: str) -> None:
     plt.show()
 
 
-# Test an image (Custom dataset)
-def test_custom(model, dataset: str, image: str) -> None:
+# Test the cats and dogs dataset
+def test_cats_dogs(model, dataset: str, image: str) -> None:
     # Load the model
     with open(dataset, "rb") as f:
-        model.load_state_dict(torch.load(f))
+        model.load_state_dict(torch.load(f), strict=False)
 
     # Open the image and get the prediction
     image: PIL.Image = PIL.Image.open(image)
@@ -66,13 +63,21 @@ def test_custom(model, dataset: str, image: str) -> None:
 # Run the program
 if __name__ == "__main__":
     # Initialize the model
-    model: models.ResNet = models.resnet18().to(device)
-    # train(model, "models/dogs_cats_model.pth", csv="dogs_cats.csv", path="custom_dataset")
-    test_custom(model, "models/dogs_cats_model.pth", "custom_dataset/images/cats/1687885599774338700.jpg") 
-    # custom_dataset/images/cats/1687885599774338700.jpg
-    # custom_dataset/images/dogs/1687885598581945400.jpg
+    # model: models.ResNet = models.resnet18().to(device) # This model is good for large images that need a lot of neurons in the layers
+
+    # Get the data
+    # data: torch.utils.data.DataLoader = Datasets.fromcsv("cats_dogs.csv", "datasets/cats_dogs_dataset")
+
+    # Train the model and test it
+    # train(model, "models/cats_dogs_model.pth", data)
+    # test_cats_dogs(model, "models/cats_dogs_model.pth", "datasets/cats_dogs_dataset/images/cats/1687885599774338700.jpg")
 
     # Initialize the model
-    # model: Model = Model(size=28).to(device)
-    # train(model, "models/numbers.pth")
-    # test(model, "models/numbers.pth", "images/0.jpg")
+    model: Model = Model(size=28).to(device) # Our custom model for small images
+
+    # Get the data
+    data: torch.utils.data.DataLoader = Datasets.mnist()
+
+    # Train the model and test it
+    train(model, "models/numbers.pth", data)
+    test_numbers(model, "models/numbers.pth", "images/0.jpg")

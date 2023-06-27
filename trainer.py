@@ -1,4 +1,3 @@
-from data import Data
 from model import Model
 import threading, torch
 
@@ -10,7 +9,7 @@ class Trainer:
     # Train the model
     def train(
         self,
-        data: Data,
+        data: torch.utils.data.DataLoader,
         model: Model,
         opt: torch.optim.Adam,
         loss_fn: torch.nn.CrossEntropyLoss,
@@ -21,7 +20,7 @@ class Trainer:
         for epoch in range(epochs):
             # Function for running in a thread
             def run(epoch: int):
-                for batch, (images, labels) in enumerate(data.model):
+                for batch, (images, labels) in enumerate(data):
                     # Acquire the lock
                     self.lock.acquire()
 
