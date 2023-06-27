@@ -1,9 +1,8 @@
 from torch.utils.data import DataLoader, Dataset
-from torchvision import datasets
 from torchvision.transforms import ToTensor
+from torchvision import datasets
 import pandas as pd
-import os, torch
-from PIL import Image
+import os, torch, PIL
 
 
 class Data:
@@ -30,7 +29,7 @@ class Data:
 
 # Custom dataset
 class CustomDataset(Dataset):
-    def __init__(self, csv_file: str, root_dir: str, transform = None) -> None:
+    def __init__(self, csv_file: str, root_dir: str, transform=None) -> None:
         self.transform = transform
         self.root_dir: str = root_dir
         self.csv_path: str = os.path.join(self.root_dir, csv_file)
@@ -41,7 +40,7 @@ class CustomDataset(Dataset):
 
     def __getitem__(self, idx) -> None:
         img_path = os.path.join(self.root_dir, "images", self.csv_file.iloc[idx, 0])
-        image: Image = Image.open(img_path).convert("RGB")
+        image: PIL.Image = PIL.Image.open(img_path).convert("RGB")
         label: torch.Tensor = torch.tensor(self.csv_file.iloc[idx, 1])
 
         if self.transform:

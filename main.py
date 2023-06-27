@@ -1,13 +1,9 @@
-import torch
-from PIL import Image
-from torch import nn, load, save
-from torch.optim import Adam
-from torchvision.transforms import ToTensor
 from data import Data
 from model import Model
 from trainer import Trainer
-import matplotlib.pyplot as plt
-import torchvision
+from image import Image
+from torchvision import models
+import torch, PIL, matplotlib.pyplot as plt
 
 # Install PyTorch with CUDA 11.1 (Faster)
 # pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
@@ -17,9 +13,7 @@ device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cp
 
 # Initialize the model
 # model: Model = Model(size=28).to(device)
-model: torchvision.models.ResNet = torchvision.models.resnet18(pretrained=True).to(
-    device
-)
+model: models.ResNet = models.resnet18(pretrained=True).to(device)
 
 # Train the model
 def train(model_name: str, csv: str = None, path: str = None) -> None:
@@ -27,10 +21,10 @@ def train(model_name: str, csv: str = None, path: str = None) -> None:
     data: Data = Data(csv, path)
 
     # Optimizer
-    opt: Adam = Adam(model.parameters(), lr=0.001)
+    opt: torch.optim.Adam = torch.optim.Adam(model.parameters(), lr=0.001)
 
     # Loss function
-    loss_fn: nn.CrossEntropyLoss = nn.CrossEntropyLoss()
+    loss_fn: torch.nn.CrossEntropyLoss = torch.nn.CrossEntropyLoss()
 
     # Train the model
     Trainer().train(data, model, opt, loss_fn, device, 10)
@@ -43,13 +37,11 @@ def train(model_name: str, csv: str = None, path: str = None) -> None:
 def test(model_name: str, image: str, model) -> None:
     # Load the model
     with open(model_name, "rb") as f:
-        model.load_state_dict(load(f))
+        model.load_state_dict(torch.load(f))
 
-    # Open the image
-    image: Image = Image.open(image)
-    image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(device)
-
-    # Get the prediction
+    # Open the image and get the prediction
+    image: PIL.Image = PIL.Image.open(image)
+    image_tensor: torch.Tensor = Image.to_tensor(image, device)
     pred: torch.Tensor = torch.argmax(model(image_tensor))
 
     # Open the image using matplotlib
@@ -62,17 +54,11 @@ def test(model_name: str, image: str, model) -> None:
 def test_custom(model_name: str, image: str, model) -> None:
     # Load the model
     with open(model_name, "rb") as f:
-        model.load_state_dict(load(f))
+        model.load_state_dict(torch.load(f))
 
-    # Open the image
-    image: Image = Image.open(image)
-    image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(device)
-
-    # Update channels
-    if image_tensor.shape[1] == 1:
-        image_tensor = image_tensor.repeat(1, 3, 1, 1)
-
-    # Get the prediction
+    # Open the image and get the prediction
+    image: PIL.Image = PIL.Image.open(image)
+    image_tensor: torch.Tensor = Image.to_tensor(image, device, 3)
     pred: torch.Tensor = torch.argmax(model(image_tensor))
 
     # Open the image using matplotlib

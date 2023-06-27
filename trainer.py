@@ -1,9 +1,6 @@
-import torch
-from torch import nn, save
-from torch.optim import Adam
 from data import Data
 from model import Model
-import threading
+import threading, torch
 
 
 class Trainer:
@@ -15,8 +12,8 @@ class Trainer:
         self,
         data: Data,
         model: Model,
-        opt: Adam,
-        loss_fn: nn.CrossEntropyLoss,
+        opt: torch.optim.Adam,
+        loss_fn: torch.nn.CrossEntropyLoss,
         device: torch.device,
         epochs: int,
         channels: int = 1,
