@@ -59,6 +59,7 @@ def test_cats_dogs(model, dataset: str, image: str) -> None:
     plt.imshow(image)
     plt.show()
 
+
 # Test the drunk and sober dataset
 def test_drunk_sober(model, dataset: str, image: str) -> None:
     # Load the model
@@ -74,6 +75,7 @@ def test_drunk_sober(model, dataset: str, image: str) -> None:
     plt.title(f"Prediction: {'Sober' if pred.item() == 0 else 'Drunk'}")
     plt.imshow(image)
     plt.show()
+
 
 # Run the program
 if __name__ == "__main__":
