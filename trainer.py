@@ -17,6 +17,8 @@ class Trainer:
       # Run the training loop
       def run(epoch: int):
         for batch, (images, labels) in enumerate(data.model):
+          images, labels = images.to(data.device), labels.to(data.device)
+
           # Forward pass
           preds = clf(images)
           loss = loss_fn(preds, labels)
