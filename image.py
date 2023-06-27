@@ -5,7 +5,7 @@ import torch, PIL
 
 class Image:
     @staticmethod
-    def to_tensor(image: PIL.Image, device: torch.device, channels: int = 1) -> torch.Tensor:
+    def to_tensor(image: PIL.Image, device: torch.device, channels: int = 3) -> torch.Tensor:
         # Convert the image to a tensor
         image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(device)
 

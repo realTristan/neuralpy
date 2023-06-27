@@ -11,12 +11,8 @@ import torch, PIL, matplotlib.pyplot as plt
 # Get the device
 device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# Initialize the model
-# model: Model = Model(size=28).to(device)
-model: models.ResNet = models.resnet18(pretrained=True).to(device)
-
 # Train the model
-def train(model_name: str, csv: str = None, path: str = None) -> None:
+def train(model, dataset: str, csv: str = None, path: str = None) -> None:
     # Get the data
     data: Data = Data(csv, path)
 
@@ -27,16 +23,16 @@ def train(model_name: str, csv: str = None, path: str = None) -> None:
     loss_fn: torch.nn.CrossEntropyLoss = torch.nn.CrossEntropyLoss()
 
     # Train the model
-    Trainer().train(data, model, opt, loss_fn, device, 10)
+    Trainer().train(data, model, opt, loss_fn, device, 10, 3)
 
     # Save the model
-    torch.save(model.state_dict(), model_name)
+    torch.save(model.state_dict(), dataset)
 
 
 # Test an image
-def test(model_name: str, image: str, model) -> None:
+def test(model, dataset: str, image: str) -> None:
     # Load the model
-    with open(model_name, "rb") as f:
+    with open(dataset, "rb") as f:
         model.load_state_dict(torch.load(f))
 
     # Open the image and get the prediction
@@ -51,9 +47,9 @@ def test(model_name: str, image: str, model) -> None:
 
 
 # Test an image (Custom dataset)
-def test_custom(model_name: str, image: str, model) -> None:
+def test_custom(model, dataset: str, image: str) -> None:
     # Load the model
-    with open(model_name, "rb") as f:
+    with open(dataset, "rb") as f:
         model.load_state_dict(torch.load(f))
 
     # Open the image and get the prediction
@@ -69,9 +65,12 @@ def test_custom(model_name: str, image: str, model) -> None:
 
 # Run the program
 if __name__ == "__main__":
-    # train("dogs_cats_model.pth", csv="dogs_cats.csv", path="custom_dataset")
-    test_custom(
-        "dogs_cats_model.pth",
-        "custom_dataset/images/cats/1687885599774338700.jpg",
-        model,
-    )
+    # Initialize the model
+    model: models.ResNet = models.resnet18().to(device)
+    train(model, "models/dogs_cats_model.pth", csv="dogs_cats.csv", path="custom_dataset")
+    test_custom(model, "models/dogs_cats_model.pth", "custom_dataset/images/cats/1687885599774338700.jpg")
+
+    # Initialize the model
+    # model: Model = Model(size=28).to(device)
+    # train(model, "models/numbers.pth")
+    # test(model, "models/numbers.pth", "images/0.jpg")

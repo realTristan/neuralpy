@@ -16,7 +16,7 @@ class Trainer:
         loss_fn: torch.nn.CrossEntropyLoss,
         device: torch.device,
         epochs: int,
-        channels: int = 1,
+        channels: int = 3,
     ) -> None:
         for epoch in range(epochs):
             # Function for running in a thread
