@@ -26,8 +26,8 @@ def train(model, dataset: str, data) -> None:
     torch.save(model.state_dict(), dataset)
 
 
-# Test the numbers dataset
-def test_numbers(model, dataset: str, image: str) -> None:
+# Test the mnist dataset
+def test_mnist(model, dataset: str, image: str) -> None:
     # Load the model
     with open(dataset, "rb") as f:
         model.load_state_dict(torch.load(f))
@@ -66,14 +66,14 @@ if __name__ == "__main__":
     # model: models.ResNet = models.resnet18().to(device) # This model is good for large images that need a lot of neurons in the layers
 
     # Train the model and test it
-    # data: torch.utils.data.DataLoader = Datasets.fromcsv("cats_dogs.csv", "datasets/cats_dogs_dataset")
+    # data: torch.utils.data.DataLoader = Datasets.fromcsv("cats_dogs.csv", "cats_dogs")
     # train(model, "models/cats_dogs_model.pth", data)
-    # test_cats_dogs(model, "models/cats_dogs_model.pth", "datasets/cats_dogs_dataset/images/cats/1687885599774338700.jpg")
+    # test_cats_dogs(model, "models/cats_dogs_model.pth", "cats_dogs/images/cats/1687885599774338700.jpg")
 
     # Initialize the model
     model: Model = Model(size=28).to(device) # Our custom model for small images
 
     # Train the model and test it
     # data: torch.utils.data.DataLoader = Datasets.mnist()
-    # train(model, "models/numbers.pth", data)
-    test_numbers(model, "models/numbers.pth", "datasets/MNIST/images/9.jpg")
+    # train(model, "models/mnist.pth", data)
+    test_mnist(model, "models/mnist.pth", "datasets/MNIST/images/9.jpg")
