@@ -17,25 +17,25 @@ device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cp
 clf: Classifier = Classifier().to(device)
 
 # Get the data
-# data: Data = Data()
+data: Data = Data()
 
 # Create the optimizer
-# opt: Adam = Adam(clf.parameters(), lr=0.001)
+opt: Adam = Adam(clf.parameters(), lr=0.001)
 
 # Create the loss function
-# loss_fn: nn.CrossEntropyLoss = nn.CrossEntropyLoss() #nn.MSELoss()
+loss_fn: nn.CrossEntropyLoss = nn.CrossEntropyLoss()
 
 # Train the model
-# Trainer().train(data, clf, opt, loss_fn, device, 10)
+Trainer().train(data, clf, opt, loss_fn, device, 10)
 
 # Save the model
-# Trainer.save(clf, "model.pth")
+clf.save("model.pth")
 
 # Load the model
 clf.load("model.pth")
 
 # Test an image
-image: Image.Image = Image.open("images/2.jpg")
+image: Image.Image = Image.open("images/9.jpg")
 image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(device)
 pred: torch.Tensor = torch.argmax(clf(image_tensor))
-print(pred)
+print(f"Prediction: {pred.item()}")
