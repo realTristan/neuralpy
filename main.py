@@ -23,7 +23,7 @@ def train(model, dataset: str, csv: str = None, path: str = None) -> None:
     loss_fn: torch.nn.CrossEntropyLoss = torch.nn.CrossEntropyLoss()
 
     # Train the model
-    Trainer().train(data, model, opt, loss_fn, device, 10, 3)
+    Trainer().train(data, model, opt, loss_fn, device, 10)
 
     # Save the model
     torch.save(model.state_dict(), dataset)
@@ -54,7 +54,7 @@ def test_custom(model, dataset: str, image: str) -> None:
 
     # Open the image and get the prediction
     image: PIL.Image = PIL.Image.open(image)
-    image_tensor: torch.Tensor = Image.to_tensor(image, device, 3)
+    image_tensor: torch.Tensor = Image.to_tensor(image, device)
     pred: torch.Tensor = torch.argmax(model(image_tensor))
 
     # Open the image using matplotlib
@@ -67,8 +67,10 @@ def test_custom(model, dataset: str, image: str) -> None:
 if __name__ == "__main__":
     # Initialize the model
     model: models.ResNet = models.resnet18().to(device)
-    train(model, "models/dogs_cats_model.pth", csv="dogs_cats.csv", path="custom_dataset")
-    test_custom(model, "models/dogs_cats_model.pth", "custom_dataset/images/cats/1687885599774338700.jpg")
+    # train(model, "models/dogs_cats_model.pth", csv="dogs_cats.csv", path="custom_dataset")
+    test_custom(model, "models/dogs_cats_model.pth", "custom_dataset/images/cats/1687885599774338700.jpg") 
+    # custom_dataset/images/cats/1687885599774338700.jpg
+    # custom_dataset/images/dogs/1687885598581945400.jpg
 
     # Initialize the model
     # model: Model = Model(size=28).to(device)

@@ -10,9 +10,9 @@ def resize(image, size=(28,28)):
 
 # Run the program
 if __name__ == "__main__":
-    image_path = "images/8.jpg"
+    image_path = "images/0.jpg"
     image = cv2.imread(image_path)
     image = to_gray(image)
-    image = resize(image)
+    image = resize(image, size=(28,28))
     cv2.imwrite(image_path, image)
 
