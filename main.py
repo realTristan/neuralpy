@@ -26,7 +26,7 @@ clf: Classifier = Classifier().to(device)
 # loss_fn: nn.CrossEntropyLoss = nn.CrossEntropyLoss() #nn.MSELoss()
 
 # Train the model
-# Trainer().train(data, clf, opt, loss_fn, 10)
+# Trainer().train(data, clf, opt, loss_fn, device, 10)
 
 # Save the model
 # Trainer.save(clf, "model.pth")
