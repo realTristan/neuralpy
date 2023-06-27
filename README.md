@@ -1,4 +1,4 @@
-# neuralpy ![Stars](https://img.shields.io/github/stars/realTristan/ReportCardPro?color=brightgreen) ![Watchers](https://img.shields.io/github/watchers/realTristan/ReportCardPro?label=Watchers)
+# neuralpy ![Stars](https://img.shields.io/github/stars/realTristan/neuralpy?color=brightgreen) ![Watchers](https://img.shields.io/github/watchers/realTristan/neuralpy?label=Watchers)
 
 # License 
 MIT License
