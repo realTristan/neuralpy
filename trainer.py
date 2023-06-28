@@ -1,50 +1,52 @@
-from model import Model
+from models import ImageModel
 import threading, torch
 
-
+# Trainer class
 class Trainer:
-    def __init__(self) -> None:
-        self.lock = threading.Lock()
-
-    # Train the model
+    @staticmethod
     def train(
-        self,
         data: torch.utils.data.DataLoader,
-        model: Model,
+        model: ImageModel,
         opt: torch.optim.Adam,
         loss_fn: torch.nn.CrossEntropyLoss,
         device: torch.device,
         epochs: int,
         channels: int = 3,
     ) -> None:
+        # Threading lock
+        lock: threading.Lock = threading.Lock()
+        
+        # Train the model
         for epoch in range(epochs):
             # Function for running in a thread
             def run(epoch: int):
-                for batch, (images, labels) in enumerate(data):
+                for batch, (value, label) in enumerate(data):
                     # Acquire the lock
-                    self.lock.acquire()
+                    lock.acquire()
 
                     # Get the data
-                    images, labels = images.to(device), labels.to(device)
-
-                    # Update channels
-                    if images.shape[1] != channels:
-                        images = images.repeat(1, channels, 1, 1)
+                    value, label = value.to(device), label.to(device)
+                    
+                    # Update channels if needed
+                    if value.shape[1] != channels:
+                        # Create empty values (of 1) so that the number of channels is 
+                        # equal to the number of channels in the model
+                        value = value.repeat(1, channels, 1, 1)
 
                     # Forward pass
-                    preds = model(images)
-                    loss = loss_fn(preds, labels)
+                    preds = model(value) # Get the predictions
+                    loss = loss_fn(preds, label) # Calculate the loss (prediction, actual) (pred - act) ** 2
 
                     # Backward pass
-                    opt.zero_grad()
-                    loss.backward()
-                    opt.step()
+                    opt.zero_grad() # Revert back to the original gradient
+                    loss.backward() # Perform the back propagation
+                    opt.step() # Update the weights
 
                     # Print the loss
                     print(f"Epoch {epoch} Batch {batch} Loss {loss.item()}")
 
                     # Release the lock
-                    self.lock.release()
+                    lock.release()
 
             # Run the thread
             thread = threading.Thread(target=run, args=(epoch,))
