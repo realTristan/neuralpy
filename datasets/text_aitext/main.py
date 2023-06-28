@@ -32,6 +32,16 @@ def file_to_sentences(file: str) -> typing.List[str]:
 
         # Return the sentences
         return sentences
+    
+    # Remove double spaces
+    def remove_double_spaces(s: str) -> str:
+        while "  " in s:
+            s = s.replace("  ", " ")
+        return s
+
+    # Convert the sentence into a list of numbers
+    text = remove_double_spaces(text)
+    text = text.replace("\n", "")
 
     # Remove empty sentences
     sentences = split_sentences([], text)
@@ -74,15 +84,6 @@ def to_tensor(sentence: str) -> torch.Tensor:
     def base64_decode(s: str) -> str:
         return str(base64.b64decode(s), "utf-8")
     sentence = base64_decode(sentence)
-
-    # Remove double spaces
-    def remove_double_spaces(s: str) -> str:
-        while "  " in s:
-            s = s.replace("  ", " ")
-        return s
-
-    # Convert the sentence into a list of numbers
-    sentence = remove_double_spaces(sentence)
 
     # Convert the sentence into a tensor
     return torch.ByteTensor(
