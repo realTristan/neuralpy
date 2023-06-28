@@ -8,10 +8,8 @@ with open("datasets/cats_dogs/dogs_cats.csv", "w") as output:
 
     # Read all the images from the images/dogs folder
     images = os.listdir("datasets/cats_dogs/images/dogs")
-    for image in images:
-        writer.writerow([f"dogs/{image}", 1])  # 1 for dogs
+    [writer.writerow([f"dogs/{image}", 1]) for image in images]
 
     # Read all the images from the images/cats folder
     images = os.listdir("datasets/cats_dogs/images/cats")
-    for image in images:
-        writer.writerow([f"cats/{image}", 0])
+    [writer.writerow([f"cats/{image}", 0]) for image in images]

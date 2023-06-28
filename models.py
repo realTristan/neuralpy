@@ -1,5 +1,6 @@
 import torch, typing
 
+
 # Image Model for smaller images. Uses a convolutional neural network.
 class ImageModel(torch.nn.Module):
     def __init__(self, size: int = 28, channels: int = 3) -> None:
@@ -19,16 +20,17 @@ class ImageModel(torch.nn.Module):
             # The "size" variable is the image size (example: 28x28)
         )
 
+
     # Forward pass
     def forward(self, x) -> typing.Any:
         return self.model(x)
 
+
     # Load the model from a file
     def load(self, path: str) -> None:
-        with open(path, "rb") as f:
-            self.load_state_dict(torch.load(f), strict=False)
+        self.load_state_dict(torch.load(path))
+    
     
     # Save the model to a file
     def save(self, path: str) -> None:
-        with open(path, "wb") as f:
-            torch.save(self.state_dict(), f)
+        torch.save(self.state_dict(), path)

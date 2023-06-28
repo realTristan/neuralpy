@@ -1,4 +1,5 @@
 from models import ImageModel
+from constants import DEVICE
 import threading, torch
 
 # Trainer class
@@ -9,7 +10,6 @@ class Trainer:
         model: ImageModel,
         opt: torch.optim.Adam,
         loss_fn: torch.nn.CrossEntropyLoss,
-        device: torch.device,
         epochs: int,
         channels: int = 3,
     ) -> None:
@@ -25,7 +25,7 @@ class Trainer:
                     lock.acquire()
 
                     # Get the data
-                    value, label = value.to(device), label.to(device)
+                    value, label = value.to(DEVICE), label.to(DEVICE)
                     
                     # Update channels if needed
                     if value.shape[1] != channels:

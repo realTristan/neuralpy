@@ -4,6 +4,7 @@ from torchvision import datasets
 import pandas as pd
 import os, torch, PIL
 
+
 # Functions for the datasets
 class Datasets:
     @staticmethod
@@ -12,14 +13,12 @@ class Datasets:
             root="datasets", train=True, download=True, transform=ToTensor()
         )
         return DataLoader(mnist, batch_size=64, shuffle=True)
-    
+
     @staticmethod
-    def fromcsv(csv: str, path: str)-> DataLoader:
-        data: CSVDataset = CSVDataset(
-            csv_file=csv, root_dir=path, transform=ToTensor()
-        )
+    def fromcsv(csv: str, path: str) -> DataLoader:
+        data: CSVDataset = CSVDataset(csv_file=csv, root_dir=path, transform=ToTensor())
         return DataLoader(data, batch_size=64, shuffle=True)
-    
+
     @staticmethod
     def fromtuple(data: list[tuple[torch.Tensor, torch.Tensor]]) -> DataLoader:
         data: TupleDataset = TupleDataset(data)
@@ -45,6 +44,7 @@ class CSVDataset(Dataset):
         if self.transform:
             sample = self.transform(image)
         return (sample, label)
+
 
 # Custom tuple dataset
 class TupleDataset(Dataset):

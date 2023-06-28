@@ -1,16 +1,13 @@
 from torchvision.transforms import ToTensor
-import torch
-import PIL
-import cv2
+from constants import DEVICE
+import torch, PIL, cv2
 
 
 class Image:
     @staticmethod
-    def to_tensor(
-        image: PIL.Image, device: torch.device, channels: int = 3
-    ) -> torch.Tensor:
+    def to_tensor(image: PIL.Image, channels: int = 3) -> torch.Tensor:
         # Convert the image to a tensor
-        image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(device)
+        image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(DEVICE)
 
         # Update channels
         if image_tensor.shape[1] != channels:
@@ -37,6 +34,7 @@ class Image:
         # Return the image
         return image
 
+
 # if __name__ == "__main__":
-    # image = Image.format("images/img.png")
-    # cv2.imwrite("images/img.png", image)
+# image = Image.format("images/img.png")
+# cv2.imwrite("images/img.png", image)
