@@ -82,17 +82,17 @@ if __name__ == "__main__":
     # Test the cats and dogs dataset
     # model: models.ResNet = models.resnet18().to(device) # This model is good for large images that need a lot of neurons in the layers
     # data: torch.utils.data.DataLoader = Datasets.fromcsv("cats_dogs.csv", "datasets/cats_dogs")
-    # train(model, "models/cats_dogs_model.pth", data)
-    # test_cats_dogs(model, "models/cats_dogs_model.pth", "datasets/cats_dogs/images/cats/1687885599774338700.jpg")
+    # train(model, "models/cats_dogs.pth", data)
+    # test_cats_dogs(model, "models/cats_dogs.pth", "datasets/cats_dogs/images/cats/1687885599774338700.jpg")
 
     # Test the mnist dataset
-    # model: Model = Model(size=28).to(device) # Our custom model for small images
-    # data: torch.utils.data.DataLoader = Datasets.mnist()
-    # train(model, "models/mnist.pth", data)
-    # test_mnist(model, "models/mnist.pth", "datasets/MNIST/images/9.jpg")
+    model: Model = Model(size=28).to(device) # Our custom model for small images
+    data: torch.utils.data.DataLoader = Datasets.mnist()
+    train(model, "models/mnist.pth", data)
+    test_mnist(model, "models/mnist.pth", "datasets/MNIST/images/9.jpg")
 
     # Test the drunk and sober dataset
-    model: models.ResNet = models.resnet18().to(device) # This model is good for large images that need a lot of neurons in the layers
+    # model: models.ResNet = models.resnet18().to(device) # This model is good for large images that need a lot of neurons in the layers
     # data: torch.utils.data.DataLoader = Datasets.fromcsv("drunk_sober.csv", "datasets/drunk_sober")
-    # train(model, "models/drunk_sober_model.pth", data)
-    test_drunk_sober(model, "models/drunk_sober_model.pth", "datasets/drunk_sober/images/drunk/1687899633180933700.jpg")
+    # train(model, "models/drunk_sober.pth", data)
+    # test_drunk_sober(model, "models/drunk_sober.pth", "datasets/drunk_sober/images/drunk/1687899633180933700.jpg")
