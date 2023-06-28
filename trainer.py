@@ -5,7 +5,6 @@ import threading, torch
 class Trainer:
     @staticmethod
     def train(
-        self,
         data: torch.utils.data.DataLoader,
         model: ImageModel,
         opt: torch.optim.Adam,
