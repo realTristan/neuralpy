@@ -1,6 +1,6 @@
 import torch, typing
 
-
+# Image Model for smaller images. Uses a convolutional neural network.
 class ImageModel(torch.nn.Module):
     def __init__(self, size: int = 28, channels: int = 3) -> None:
         super().__init__()
@@ -13,11 +13,10 @@ class ImageModel(torch.nn.Module):
             torch.nn.ReLU(),
             torch.nn.Flatten(),
             torch.nn.Linear(64 * (size - 6) * (size - 6), 10),  # Input features, 10 output features
-            # olc (output layers) * (matrix size) * (matrix size)
-            # The matrix size becomes smaller as the image goes through the layers because of matrix multiplication
+            # There are 64 output channels from the last convolutional layer
             # We subsctract 6 because we have 3 layers with a 3x3 kernel. 3 * 2 = 6 
-            # (for every layer, 1 row and 1 column of the matrix is expelled)
-            # The (matrix size) * (matrix size) is the size of the image (28x28 for example)
+            # (for every layer, 1 row and 1 column of the matrix are expelled)
+            # The "size" variable is the image size (example: 28x28)
         )
 
     # Forward pass

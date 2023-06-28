@@ -4,7 +4,7 @@ from torchvision import datasets
 import pandas as pd
 import os, torch, PIL
 
-# Datasets
+# Functions for the datasets
 class Datasets:
     @staticmethod
     def mnist() -> DataLoader:
@@ -46,7 +46,7 @@ class CSVDataset(Dataset):
             sample = self.transform(image)
         return (sample, label)
 
-
+# Custom tuple dataset
 class TupleDataset(Dataset):
     def __init__(self, data: list[tuple[torch.Tensor, torch.Tensor]]) -> None:
         self.data: list[tuple[torch.Tensor, torch.Tensor]] = data

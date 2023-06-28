@@ -1,7 +1,7 @@
 from models import ImageModel
 import threading, torch
 
-
+# Trainer class
 class Trainer:
     @staticmethod
     def train(
