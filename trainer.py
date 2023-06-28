@@ -26,7 +26,7 @@ class Trainer:
 
                     # Get the data
                     images, labels = images.to(device), labels.to(device)
-
+                    
                     # Update channels if needed
                     if images.shape[1] != channels:
                         # Create empty values (of 1) so that the number of channels is 
