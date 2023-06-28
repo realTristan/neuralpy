@@ -27,18 +27,20 @@ class Trainer:
                     # Get the data
                     images, labels = images.to(device), labels.to(device)
 
-                    # Update channels
+                    # Update channels if needed
                     if images.shape[1] != channels:
+                        # Create empty values (of 1) so that the number of channels is 
+                        # equal to the number of channels in the model
                         images = images.repeat(1, channels, 1, 1)
 
                     # Forward pass
-                    preds = model(images)
-                    loss = loss_fn(preds, labels)
+                    preds = model(images) # Get the predictions
+                    loss = loss_fn(preds, labels) # Calculate the loss (prediction, actual) (pred - act) ** 2
 
                     # Backward pass
-                    opt.zero_grad()
-                    loss.backward()
-                    opt.step()
+                    opt.zero_grad() # Revert back to the original gradient
+                    loss.backward() # Perform the back propagation
+                    opt.step() # Update the weights
 
                     # Print the loss
                     print(f"Epoch {epoch} Batch {batch} Loss {loss.item()}")
