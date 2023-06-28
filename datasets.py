@@ -20,6 +20,7 @@ class Datasets:
         )
         return DataLoader(data, batch_size=64, shuffle=True)
 
+
 # Custom csv dataset
 class CSVDataset(Dataset):
     def __init__(self, csv_file: str, root_dir: str, transform=None) -> None:
@@ -39,3 +40,14 @@ class CSVDataset(Dataset):
         if self.transform:
             sample = self.transform(image)
         return (sample, label)
+
+
+class TupleDataset(Dataset):
+    def __init__(self, data: list[tuple[torch.Tensor, torch.Tensor]]) -> None:
+        self.data: list[tuple[torch.Tensor, torch.Tensor]] = data
+
+    def __len__(self) -> None:
+        return len(self.data)
+
+    def __getitem__(self, idx) -> None:
+        return self.data[idx]

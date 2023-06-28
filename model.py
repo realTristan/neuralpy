@@ -17,7 +17,8 @@ class Model(torch.nn.Module):
             torch.nn.Linear(olc * (size - 6) * (size - 6), 10),  # Input features, 10 output features
             # olc (output layers) * (matrix size) * (matrix size)
             # The matrix size becomes smaller as the image goes through the layers because of matrix multiplication
-            # We subsctract 6 because we have 3 layers with a 3x3 kernel. 3 * 2 = 6 (every layer 2 matrix columns are expelled)
+            # We subsctract 6 because we have 3 layers with a 3x3 kernel. 3 * 2 = 6 
+            # (for every layer, 1 row and 1 column of the matrix is expelled)
             # The (matrix size) * (matrix size) is the size of the image (28x28 for example)
         )
 
