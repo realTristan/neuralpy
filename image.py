@@ -1,5 +1,5 @@
 from torchvision.transforms import ToTensor
-import torch, PIL
+import torch, PIL, cv2
 
 
 class Image:
@@ -16,3 +16,24 @@ class Image:
 
         # Return the image tensor
         return image_tensor
+    
+    @staticmethod
+    def format(image_path: str, size: tuple = (300, 300)):
+        # Convert the image to grayscale
+        def to_gray(image):
+            return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        # Resize the image
+        def resize(image, size):
+            return cv2.resize(image, size, interpolation=cv2.INTER_AREA)
+        
+        # Read the image and convert it to grayscale then resize it
+        image = cv2.imread(image_path)
+        image = to_gray(image)
+        image = resize(image, size)
+        
+        # Save the image
+        cv2.imwrite(image_path, image)
+
+#if __name__ == "__main__":
+    #Image.format("images/ai.png")
