@@ -207,7 +207,6 @@ if __name__ == "__main__":
     s: str = "The first world war was one of the most brutal and remorseless events in history; ‘the global conflict that defined a century’"
     s = base64_encode(s)
     s_tensor = to_tensor(s)
-    # Convert temp to input_size length tensor
     s_tensor = torch.zeros(INPUT_SIZE).to(DEVICE)
     test_tensor(model, s_tensor)
     
