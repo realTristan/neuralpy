@@ -1,5 +1,7 @@
 import typing, torch, base64, csv
 
+device: torch.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 # Read the file
 def file_to_sentences(file: str) -> typing.List[str]:
     text: str = open(file, "r").read().strip()
@@ -74,14 +76,6 @@ def to_tensor(sentence: str) -> torch.Tensor:
         return str(base64.b64decode(s), "utf-8")
     sentence = base64_decode(sentence)
     
-    # Convert the sentences into numbers
-    def base10(s: str) -> int:
-        b: bytes = bytes(s, "utf-8")
-        res: int = 0
-        for byte in b:
-            res += byte
-        return res
-
     # Remove double spaces
     def remove_double_spaces(s: str) -> str:
         while "  " in s:
@@ -90,16 +84,15 @@ def to_tensor(sentence: str) -> torch.Tensor:
 
     # Convert the sentence into a list of numbers
     sentence = remove_double_spaces(sentence)
-    sentence = [base10(c) for c in sentence.split(" ")]
-
-    # Convert each sentence into a tensor
-    return torch.tensor(sentence)
+    
+    # Convert the sentence into a tensor
+    return torch.ByteTensor(list(sentence.encode("utf-8"))).to(device) #torch.tensor(sentence)
 
 
 def all_to_tensor(data: typing.List[tuple[str, int]]) -> typing.List[tuple[torch.Tensor, torch.Tensor]]:
     new_data: typing.List[tuple[torch.Tensor, torch.Tensor]] = []
     for i in range(len(data)):
-        label_tensor: torch.Tensor = torch.tensor(data[i][1])
+        label_tensor: torch.Tensor = torch.tensor(data[i][1]).to(device)
         text_tensor: torch.Tensor = to_tensor(data[i][0])
         new_data.append((text_tensor, label_tensor))
     return new_data
@@ -114,7 +107,7 @@ def padding(all_tensors: typing.List[tuple[torch.Tensor, torch.Tensor]]):
     for i in range(len(all_tensors)):
         while len(all_tensors[i][0]) < max_len:
             tmp: typing.List[tensor.Tensor] = list(all_tensors[i][0])
-            tmp = torch.cat((all_tensors[i][0], torch.tensor([0])))
+            tmp = torch.cat((all_tensors[i][0], torch.tensor([0]).to(device)))
             all_tensors[i] = (tmp, all_tensors[i][1])
     return all_tensors
 
@@ -125,10 +118,3 @@ if __name__ == "__main__":
     all_tensors: typing.List[tuple[torch.Tensor, torch.Tensor]] = all_to_tensor(csv_data)
     padded: typing.List[tuple[torch.Tensor, torch.Tensor]] = padding(all_tensors)
     print(padded)
-
-
-# Example Output:
-# [
-#   (tensor([889, 225, 443, 0, 0, 0, 0]), tensor(1)), # not ai made
-#   (tensor([901, 394, 674, 884, 10, 12, 930]), tensor(0)) # ai made
-# ]

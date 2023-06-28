@@ -19,6 +19,11 @@ class Datasets:
             csv_file=csv, root_dir=path, transform=ToTensor()
         )
         return DataLoader(data, batch_size=64, shuffle=True)
+    
+    @staticmethod
+    def fromtuple(data: list[tuple[torch.Tensor, torch.Tensor]]) -> DataLoader:
+        data: TupleDataset = TupleDataset(data)
+        return DataLoader(data, batch_size=64, shuffle=True)
 
 
 # Custom csv dataset
