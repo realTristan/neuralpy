@@ -1,5 +1,5 @@
 from datasets import Datasets
-from image_model import ImageModel
+from models import ImageModel
 from trainer import Trainer
 from image import Image
 import torch, PIL, matplotlib.pyplot as plt

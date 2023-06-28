@@ -1,4 +1,4 @@
-from image_model import ImageModel
+from models import ImageModel
 import threading, torch
 
 
