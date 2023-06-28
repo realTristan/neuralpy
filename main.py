@@ -1,8 +1,7 @@
 from datasets import Datasets
-from model import Model
+from image_model import ImageModel
 from trainer import Trainer
 from image import Image
-from torchvision import models
 import torch, PIL, matplotlib.pyplot as plt
 
 # Install PyTorch with CUDA 11.1 (Faster)
@@ -20,7 +19,7 @@ def train(model, dataset: str, data) -> None:
     loss_fn: torch.nn.CrossEntropyLoss = torch.nn.CrossEntropyLoss()
 
     # Train the model
-    Trainer().train(data, model, opt, loss_fn, device, 10)
+    Trainer.train(data, model, opt, loss_fn, device, 10)
 
     # Save the model
     torch.save(model.state_dict(), dataset)
@@ -86,7 +85,7 @@ if __name__ == "__main__":
     # test_cats_dogs(model, "models/cats_dogs.pth", "datasets/cats_dogs/images/cats/1687885599774338700.jpg")
 
     # Test the mnist dataset
-    model: Model = Model(size=28).to(device) # Our custom model for small images
+    model: ImageModel = ImageModel(size=28).to(device) # Our custom model for small images
     data: torch.utils.data.DataLoader = Datasets.mnist()
     train(model, "models/mnist.pth", data)
     test_mnist(model, "models/mnist.pth", "datasets/MNIST/images/9.jpg")

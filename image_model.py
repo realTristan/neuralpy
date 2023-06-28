@@ -1,7 +1,7 @@
 import torch, typing
 
 
-class Model(torch.nn.Module):
+class ImageModel(torch.nn.Module):
     def __init__(self, size: int = 28, channels: int = 3) -> None:
         super().__init__()
         hlc: int = channels * 12 # Hidden layer channels
