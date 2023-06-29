@@ -1,5 +1,5 @@
 from models import ImageModel
-from constants import DEVICE
+from constants import DEVICE, EPOCHS
 import threading, torch
 
 # Trainer class
@@ -10,14 +10,13 @@ class Trainer:
         model: ImageModel,
         opt: torch.optim.Adam,
         loss_fn: torch.nn.CrossEntropyLoss,
-        epochs: int,
         channels: int = 3,
     ) -> None:
         # Threading lock
         lock: threading.Lock = threading.Lock()
         
         # Train the model
-        for epoch in range(epochs):
+        for epoch in range(EPOCHS):
             # Function for running in a thread
             def run(epoch: int):
                 for batch, (value, label) in enumerate(data):

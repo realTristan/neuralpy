@@ -18,7 +18,7 @@ def train(model, dataset: str, data) -> None:
     loss_fn: torch.nn.CrossEntropyLoss = torch.nn.CrossEntropyLoss()
 
     # Train the model
-    Trainer.train(data, model, opt, loss_fn, 10)
+    Trainer.train(data, model, opt, loss_fn)
 
     # Save the model
     torch.save(model.state_dict(), dataset)
@@ -108,6 +108,6 @@ if __name__ == "__main__":
 
     # Test the healthy and unhealthy dataset
     model: models.ResNet = models.resnet18().to(DEVICE) # This model is good for large images that need a lot of neurons in the layers
-    # data: torch.utils.data.DataLoader = Datasets.fromcsv("healthy_unhealthy.csv", "datasets/healthy_unhealthy")
-    # train(model, "models/healthy_unhealthy.pth", data)
+    data: torch.utils.data.DataLoader = Datasets.fromcsv("healthy_unhealthy.csv", "datasets/healthy_unhealthy")
+    train(model, "models/healthy_unhealthy.pth", data)
     test_healthy_unhealthy(model, "models/healthy_unhealthy.pth", "datasets/healthy_unhealthy/images/healthy/8.png")
