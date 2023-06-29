@@ -1,6 +1,6 @@
 from torchvision.transforms import ToTensor
 from constants import DEVICE
-import torch, PIL, cv2
+import torch, cv2
 
 
 class Image:

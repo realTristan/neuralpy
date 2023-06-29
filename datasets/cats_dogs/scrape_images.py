@@ -1,8 +1,8 @@
 import bs4, requests, time, cv2
 import numpy as np
 
-dogs_url: str = lambda page: "https://www.bing.com/images/search?q=dog&form=HDRSC4&first=" + str(page)
-cats_url: str = lambda page: "https://www.bing.com/images/search?q=cat&form=HDRSC4&first=" + str(page)
+dogs_url = lambda page: "https://www.bing.com/images/search?q=dog&form=HDRSC4&first=" + str(page)
+cats_url = lambda page: "https://www.bing.com/images/search?q=cat&form=HDRSC4&first=" + str(page)
 
 # Convert the image to grayscale
 def to_gray(image):
