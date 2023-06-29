@@ -2,6 +2,7 @@ from datasets import Datasets
 from models import ImageModel
 from trainer import Trainer
 from image import Image
+from torchvision import models
 from constants import DEVICE, MNIST_IMAGE_SIZE
 import torch, PIL, matplotlib.pyplot as plt
 
@@ -70,6 +71,20 @@ def test_drunk_sober(model, dataset: str, image: str) -> None:
     plt.imshow(image)
     plt.show()
 
+def test_healthy_unhealthy(model, dataset: str, image: str) -> None:
+    # Load the model
+    model.load_state_dict(torch.load(dataset))
+
+    # Open the image and get the prediction
+    image: PIL.Image = PIL.Image.open(image)
+    image_tensor: torch.Tensor = Image.to_tensor(image)
+    pred: torch.Tensor = torch.argmax(model(image_tensor))
+
+    # Open the image using matplotlib
+    plt.title(f"Prediction: {'Healthy' if pred.item() == 1 else 'Unhealthy'}")
+    plt.imshow(image)
+    plt.show()
+
 
 # Run the program
 if __name__ == "__main__":
@@ -80,13 +95,19 @@ if __name__ == "__main__":
     # test_cats_dogs(model, "models/cats_dogs.pth", "datasets/cats_dogs/images/cats/1687885599774338700.jpg")
 
     # Test the mnist dataset
-    model: ImageModel = ImageModel(size=MNIST_IMAGE_SIZE).to(DEVICE) # Our custom model for small images
-    data: torch.utils.data.DataLoader = Datasets.mnist()
-    train(model, "models/mnist.pth", data)
-    test_mnist(model, "models/mnist.pth", "datasets/MNIST/images/9.jpg")
+    # model: ImageModel = ImageModel(size=MNIST_IMAGE_SIZE).to(DEVICE) # Our custom model for small images
+    # data: torch.utils.data.DataLoader = Datasets.mnist()
+    # train(model, "models/mnist.pth", data)
+    # test_mnist(model, "models/mnist.pth", "datasets/MNIST/images/9.jpg")
 
     # Test the drunk and sober dataset
     # model: models.ResNet = models.resnet18().to(DEVICE) # This model is good for large images that need a lot of neurons in the layers
     # data: torch.utils.data.DataLoader = Datasets.fromcsv("drunk_sober.csv", "datasets/drunk_sober")
     # train(model, "models/drunk_sober.pth", data)
     # test_drunk_sober(model, "models/drunk_sober.pth", "datasets/drunk_sober/images/drunk/1687899633180933700.jpg")
+
+    # Test the healthy and unhealthy dataset
+    model: models.ResNet = models.resnet18().to(DEVICE) # This model is good for large images that need a lot of neurons in the layers
+    # data: torch.utils.data.DataLoader = Datasets.fromcsv("healthy_unhealthy.csv", "datasets/healthy_unhealthy")
+    # train(model, "models/healthy_unhealthy.pth", data)
+    test_healthy_unhealthy(model, "models/healthy_unhealthy.pth", "datasets/healthy_unhealthy/images/healthy/8.png")

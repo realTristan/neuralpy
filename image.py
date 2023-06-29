@@ -5,7 +5,7 @@ import torch, PIL, cv2
 
 class Image:
     @staticmethod
-    def to_tensor(image: PIL.Image, channels: int = 3) -> torch.Tensor:
+    def to_tensor(image, channels: int = 3) -> torch.Tensor:
         # Convert the image to a tensor
         image_tensor: torch.Tensor = ToTensor()(image).unsqueeze(0).to(DEVICE)
 
@@ -17,7 +17,7 @@ class Image:
         return image_tensor
 
     @staticmethod
-    def format(image_path: str, size: tuple = (300, 300)) -> PIL.Image:
+    def format(image_path: str, size: tuple = (300, 300)):
         # Convert the image to grayscale
         def to_gray(image):
             return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
