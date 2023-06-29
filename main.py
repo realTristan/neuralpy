@@ -37,7 +37,7 @@ def test_mnist(model, dataset: str, image_name: str) -> None:
 
     # Open the image using matplotlib
     plt.title(f"Prediction: {pred.item()}")
-    plt.imshow(image_tensor.squeeze().numpy(), cmap="gray")
+    plt.imshow(image, cmap="gray")
     plt.show()
 
 
@@ -53,7 +53,7 @@ def test_cats_dogs(model, dataset: str, image_name: str) -> None:
 
     # Open the image using matplotlib
     plt.title(f"Prediction: {'Cat' if pred.item() == 0 else 'Dog'}")
-    plt.imshow(image_tensor.squeeze().numpy(), cmap="gray")
+    plt.imshow(image, cmap="gray")
     plt.show()
 
 
@@ -69,7 +69,7 @@ def test_drunk_sober(model, dataset: str, image_name: str) -> None:
 
     # Open the image using matplotlib
     plt.title(f"Prediction: {'Sober' if pred.item() == 0 else 'Drunk'}")
-    plt.imshow(image_tensor.squeeze().numpy(), cmap="gray")
+    plt.imshow(image, cmap="gray")
     plt.show()
 
 def test_healthy_unhealthy(model, dataset: str, image_name: str) -> None:
@@ -83,7 +83,7 @@ def test_healthy_unhealthy(model, dataset: str, image_name: str) -> None:
 
     # Open the image using matplotlib
     plt.title(f"Prediction: {'Healthy' if pred.item() == 1 else 'Unhealthy'}")
-    plt.imshow(image_tensor.squeeze().numpy(), cmap="gray")
+    plt.imshow(image, cmap="gray")
     plt.show()
 
 
