@@ -3,6 +3,7 @@
 
 # Preview
 ![image](https://github.com/realTristan/neuralpy/assets/75189508/064112b0-8311-4201-9369-fad4f31ad4be)
+![image](https://github.com/realTristan/neuralpy/assets/75189508/ed305bcd-4758-4772-a7e9-f8ba935652d2)
 
 # License 
 MIT License
