@@ -59,19 +59,20 @@ def test_tensor(model, tensor):
 
 if __name__ == "__main__":
     # Building the dataset
-    write_csv("data.csv")
+    # write_csv("data.csv")
     csv_data = read_csv("data.csv")
     tensors = to_tensor(csv_data)
     padded = pad(tensors)
 
     # Training and testing
-    dataset = Dataset(padded)
     model = Model().to(DEVICE)
+    dataset = Dataset(padded)
     train(model, dataset)
     test(model, dataset)
     model.save("model.pth")
 
     # Testing real sentence
+    # model.load("model.pth")
     s: str = "The first world war was one of the most brutal and remorseless events in history; ‘the global conflict that defined a century’"
     s = base64_encode(s)
     s_tensor = text_to_tensor(s)
