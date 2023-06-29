@@ -46,7 +46,7 @@ def text_to_sentences(text: str) -> typing.List[str]:
 
 # Convert the sentence into a tensor
 def text_to_tensor(s: str) -> torch.Tensor:
-    s_l = list(base64_decode(s).encode("utf-8"))
+    s_l = list(s.encode("utf-8"))
     return torch.ByteTensor(s_l).to(DEVICE).float()
 
 
