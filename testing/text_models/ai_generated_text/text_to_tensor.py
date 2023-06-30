@@ -1,6 +1,6 @@
 import typing, torch
 from constants import DEVICE
-from utils import base64_encode, base64_decode
+from utils import base64_encode
 
 
 # Convert the text into a list of sentences
