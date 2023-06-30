@@ -13,13 +13,13 @@ def update_csv(csv_path: str, new_rows: list) -> None:
 
 
 def read_angry_texts() -> list[tuple[str, int]]:
-    lines: list[str] = read_file_newlines("texts/angry.txt")
-    return [(utils.base64_encode(line), 1) for line in lines]
+    lines: list[str] = read_file_newlines("texts/mean.txt")
+    return [(utils.base64_encode(line.lower()), 1) for line in lines]
 
 
 def read_kind_texts() -> list[tuple[str, int]]:
     lines: list[str] = read_file_newlines("texts/kind.txt")
-    return [(utils.base64_encode(line), 0) for line in lines]
+    return [(utils.base64_encode(line.lower()), 0) for line in lines]
 
 # Read the csv file
 def read_csv(file: str):

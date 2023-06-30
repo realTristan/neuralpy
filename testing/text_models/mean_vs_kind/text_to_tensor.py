@@ -1,6 +1,19 @@
 import torch
 from constants import DEVICE
 
+# Remove non alphabet characters
+def remove_non_alphabet(s: str) -> str:
+    new_s = ""
+    for char in s:
+        if char.isalpha():
+            new_s += char
+    return new_s
+
+# Split the sentence into words
+def split_sentence(s: str) -> list:
+    s = remove_non_alphabet(s)
+    return s.split()
+
 # Convert the sentence into a tensor
 def text_to_tensor(s: str) -> torch.Tensor:
     s_l = list(s.encode("utf-8"))

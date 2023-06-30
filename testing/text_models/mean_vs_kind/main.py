@@ -9,7 +9,8 @@ from csv_utils import read_csv
 
 def train(model, dataset):
     model.train()
-    criterion = torch.nn.BCELoss()
+    # BinaryCrossEntropyWithLogits
+    criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     for epoch in range(EPOCHS):
         for i in range(len(dataset)):
@@ -66,14 +67,14 @@ if __name__ == "__main__":
 
     # Training and testing
     model = Model().to(DEVICE)
-    # dataset = Dataset(padded)
-    # train(model, dataset)
-    # test(model, dataset)
-    # model.save("model.pth")
+    dataset = Dataset(padded)
+    train(model, dataset)
+    test(model, dataset)
+    model.save("model.pth")
 
     # Testing real sentence
-    model.load("model.pth")
-    s: str = "You are manipulative and terrible! And you suck at everything!"
+    # model.load("model.pth")
+    s: str = "You are manipulative and bad!".lower()
     s = base64_encode(s)
     s_tensor = text_to_tensor(s)
     s_tensor = torch.zeros(INPUT_SIZE).to(DEVICE)
