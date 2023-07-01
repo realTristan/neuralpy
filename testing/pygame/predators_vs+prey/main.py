@@ -1,8 +1,8 @@
 import pygame
-from config import SCREEN, BACKGROUND_COLOR, CLOCK_SPEED, EPOCHS
+from config import SCREEN, BACKGROUND_COLOR, CLOCK_SPEED
 from prey import Prey
 from predator import Predator
-from models import PREY_MODEL
+from models import PREY_MODEL, PREDATOR_MODEL
 
 prey: list[Prey] = []
 for i in range(50):
@@ -23,8 +23,8 @@ while 1:
     # Move the prey
     for p in prey:
         data = p.move(predators, prey)
-        prey, made_baby = p.is_colliding_prey(predators, prey)
-        PREY_MODEL._train(data, made_baby)
+        prey, output = p.is_colliding_prey(predators, prey)
+        PREY_MODEL._train(data, output)
     
     # Move the predators
     for p in predators:
@@ -32,17 +32,17 @@ while 1:
             predators.remove(p)
             continue
         
-        p.move()
-        prey = p.is_colliding_prey(prey)
-        predators = p.multiply(predators)
+        data = p.move()
+        prey, predators, output = p.is_colliding(prey, predators)
+        PREDATOR_MODEL._train(data, output)
     
     # If prey win
-    if len(prey) > 100 or len(predators) <= 10:
+    if len(prey) > 150 or len(predators) <= 10:
         print("Prey win!")
         break
     
     # If predators win
-    if len(predators) > 100 or len(prey) <= 10:
+    if len(predators) > 150 or len(prey) <= 10:
         print("Predators win!")
         break
     

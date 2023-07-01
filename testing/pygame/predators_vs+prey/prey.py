@@ -31,21 +31,9 @@ class Prey:
         if self.y > HEIGHT - 50:
             self.y -= self.y_multiplier
         
-        closest_prey: float = -1.0
-        closest_predator: float = -1.0
         
-        for p in predators:
-            if abs(self.x - p.x) + abs(self.y - p.y) < closest_predator or closest_predator == -1:
-                closest_predator = abs(self.x - p.x) + abs(self.y - p.y)
-        
-        for p in prey:
-            if p == self:
-                continue
-            
-            # Calculate closest prey
-            if abs(self.x - p.x) + abs(self.y - p.y) < closest_prey or closest_prey == -1:
-                closest_prey = abs(self.x - p.x) + abs(self.y - p.y)
-
+        # Get the closest predators and prey
+        closest_predator, closest_prey = self.closest(predators, prey)
 
         # Model prediction
         data = [self.x, self.y, self.x_multiplier,
@@ -55,29 +43,54 @@ class Prey:
         self.last_output = PREY_MODEL(data_tensor)
         
         # Print the output
-        print(self.last_output.item())
+        print(f"PREY: {self.last_output.item()}")
         
         # Check the last output
-        if self.last_output >= 1:
-            self.x_multiplier /= self.last_output.item()
-            self.y_multiplier /= self.last_output.item()
-            self.x -= self.x_multiplier
-            self.y -= self.y_multiplier
+        self.x_multiplier /= self.last_output.item()
+        self.y_multiplier /= self.last_output.item()
         
+        # Draw the prey
         pygame.draw.circle(SCREEN, self.color, (self.x, self.y), 5)
 
         # Return the data
         return data_tensor
 
+    # Get the closest prey and predators positions
+    def closest(self, predators, prey):
+        # Get the closest prey and predators
+        closest_prey: float = -1.0
+        closest_predator: float = -1.0
+        
+        # Iterate over the predators
+        for p in predators:
+            if abs(self.x - p.x) + abs(self.y - p.y) < closest_predator or closest_predator == -1:
+                closest_predator = abs(self.x - p.x) + abs(self.y - p.y)
+        
+        # Iterate over the prey
+        for p in prey:
+            if p == self:
+                continue
+            
+            # Calculate closest prey
+            if abs(self.x - p.x) + abs(self.y - p.y) < closest_prey or closest_prey == -1:
+                closest_prey = abs(self.x - p.x) + abs(self.y - p.y)
+        
+        # Return the results
+        return closest_predator, closest_prey
+
+
+    # Check if the prey is colliding with another prey
     def is_colliding_prey(self, predators, prey):
         len0: int = len(prey)
         is_eaten: int = 0
         
+        # Iterate over the predators
         for p in predators:
             if abs(self.x - p.x) < 10 and abs(self.y - p.y) < 10:
                 is_eaten = 1
                 break
                 
+        # Iterate over the prey
         for p in prey:
             if p == self:
                 continue
@@ -90,10 +103,13 @@ class Prey:
                     prey.remove(self)
                     break
         
+        # Return the correct cboice
         return prey, torch.tensor(
-            0 if len(prey) != len0 or is_eaten == 0 else 1
-        ).unsqueeze(0).float()
+            [0 if len(prey) != len0 or is_eaten == 0 else 1]
+        ).float()
 
+    
+    # Create a new prey
     @staticmethod
     def new():
         x: int = random.randint(50, 750)
