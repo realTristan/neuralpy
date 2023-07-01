@@ -14,7 +14,7 @@ class Prey:
         self.speed: int = speed
         self.x_multiplier: float = 1.0
         self.y_multiplier: float = 1.0
-        self.color: tuple[int, int, int] = (0, 255, 0)
+        self.color: tuple[int, int, int] = (100, 100, 255)
         self.last_output: float = 0.0
 
     def move(self, predators, prey):
@@ -112,7 +112,7 @@ class Prey:
     # Create a new prey
     @staticmethod
     def new():
-        x: int = random.randint(50, 750)
-        y: int = random.randint(50, 550)
+        x: int = random.randint(50, WIDTH - 50)
+        y: int = random.randint(50, HEIGHT - 50)
         speed: int = random.randint(1, 5)
         return Prey(x, y, speed)

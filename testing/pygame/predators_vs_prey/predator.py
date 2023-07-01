@@ -16,7 +16,7 @@ class Predator:
         self.speed: int = speed
         self.food: int = 0
         self.moves_left: int = 300
-        self.color: tuple[int, int, int] = (255, 0, 0)
+        self.color: tuple[int, int, int] = (255, 100, 100)
 
     def can_move(self):
         return self.moves_left >= 0
@@ -87,7 +87,7 @@ class Predator:
     # Create a new predator
     @staticmethod
     def new():
-        x: int = random.randint(50, 750)
-        y: int = random.randint(50, 550)
+        x: int = random.randint(50, WIDTH - 50)
+        y: int = random.randint(50, HEIGHT - 50)
         speed: int = random.randint(1, 5)
         return Predator(x, y, speed)
