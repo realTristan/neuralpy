@@ -5,7 +5,7 @@ pygame.init()
 pygame.display.set_caption("Evolution")
 
 # Variables
-CLOCK_SPEED: int = 5
+CLOCK_SPEED: int = 120
 WIDTH: int = 1200
 HEIGHT: int = 600
 BACKGROUND_COLOR: tuple[int, int, int] = (0, 0, 0)

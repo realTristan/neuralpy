@@ -111,4 +111,4 @@ if __name__ == "__main__":
     model: models.ResNet = models.resnet18().to(DEVICE) # This model is good for large images that need a lot of neurons in the layers
     #data: torch.utils.data.DataLoader = Datasets.fromcsv("healthy_unhealthy.csv", "datasets/healthy_unhealthy")
     #train(model, "models/healthy_unhealthy.pth", data)
-    test_healthy_unhealthy(model, "models/healthy_unhealthy.pth", "datasets/healthy_unhealthy/images/healthy/3.png")
+    test_healthy_unhealthy(model, "models/healthy_unhealthy.pth", "datasets/healthy_unhealthy/images/unhealthy/3.png")

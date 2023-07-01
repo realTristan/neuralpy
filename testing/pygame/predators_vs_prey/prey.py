@@ -45,9 +45,6 @@ class Prey:
         self.x_multiplier *= self.last_output.item()
         self.y_multiplier *= self.last_output.item()
 
-        # Print the output
-        print(f"PREY: {self.last_output.item()}")
-
         # Draw the prey as a stick with width of self.size
         pygame.draw.line(SCREEN, self.color, (self.x, self.y),
                          (self.x + self.x_multiplier, self.y + self.y_multiplier),
@@ -57,6 +54,7 @@ class Prey:
 
         # Return the data
         return data_tensor
+
 
     # Get the closest prey and predators positions
     def closest(self, predators, prey):
@@ -81,8 +79,8 @@ class Prey:
         # Return the results
         return closest_predator, closest_prey
 
-    # Check if the prey is colliding with another prey
 
+    # Check if the prey is colliding with another prey
     def is_colliding_prey(self, predators, prey):
         len0: int = len(prey)
         is_eaten: int = 0
@@ -114,8 +112,8 @@ class Prey:
             [output + self.y_multiplier * self.x_multiplier]
         ).float()
 
-    # Create a new prey
 
+    # Create a new prey
     @staticmethod
     def new():
         x: int = random.randint(50, WIDTH - 50)

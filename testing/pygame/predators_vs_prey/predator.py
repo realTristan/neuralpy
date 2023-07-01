@@ -48,9 +48,6 @@ class Predator:
         self.x_multiplier *= self.last_output.item()
         self.y_multiplier *= self.last_output.item()
 
-        # Print the output
-        print(f"PREDATOR: {self.last_output.item()}")
-
         # Draw the predator
         pygame.draw.line(SCREEN, self.color, (self.x, self.y),
                          (self.x + self.x_multiplier, self.y + self.y_multiplier),

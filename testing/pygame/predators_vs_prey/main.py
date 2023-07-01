@@ -35,13 +35,13 @@ while 1:
         PREDATOR_MODEL._train(data, output)
     
     # If prey win
-    if len(prey) > 120 or len(predators) <= 10:
+    if len(prey) > 200 or len(predators) <= 10:
         prey_wins += 1
         print("Prey win!")
         break
     
     # If predators win
-    if len(predators) > 120 or len(prey) <= 10:
+    if len(predators) > 200 or len(prey) <= 10:
         predator_wins += 1
         print("Predators win!")
         break
