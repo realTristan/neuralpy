@@ -7,7 +7,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class PreyModel(torch.nn.Module):
     def __init__(self):
         super(PreyModel, self).__init__()
-        self.lstm1 = torch.nn.LSTM(7, 64)
+        self.lstm1 = torch.nn.LSTM(5, 64)
         self.linear1 = torch.nn.Linear(64, 128)
         self.sigmoid1 = torch.nn.Sigmoid()
         self.lstm2 = torch.nn.LSTM(128, 128)
@@ -49,7 +49,7 @@ class PreyModel(torch.nn.Module):
 class PredatorModel(torch.nn.Module):
     def __init__(self):
         super(PredatorModel, self).__init__()
-        self.lstm1 = torch.nn.LSTM(5, 64)
+        self.lstm1 = torch.nn.LSTM(3, 64)
         self.linear1 = torch.nn.Linear(64, 128)
         self.sigmoid1 = torch.nn.Sigmoid()
         self.lstm2 = torch.nn.LSTM(128, 128)

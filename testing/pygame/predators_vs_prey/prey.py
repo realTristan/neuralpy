@@ -36,10 +36,9 @@ class Prey:
         closest_predator, closest_prey = self.closest(predators, prey)
 
         # Model prediction
-        data = [self.x, self.y, self.x_multiplier,
-                self.y_multiplier, self.last_output, 
+        data: list = [self.x, self.y, self.last_output, 
                 closest_prey, closest_predator]
-        data_tensor = torch.tensor([data]).float()
+        data_tensor: torch.Tensor = torch.tensor([data]).float()
         self.last_output = PREY_MODEL(data_tensor)
         
         # Print the output
@@ -104,8 +103,9 @@ class Prey:
                     break
         
         # Return the correct cboice
+        output: int = (0 if len(prey) != len0 or is_eaten == 0 else 1)
         return prey, torch.tensor(
-            [0 if len(prey) != len0 or is_eaten == 0 else 1]
+            [output  + self.y_multiplier * self.x_multiplier]
         ).float()
 
     

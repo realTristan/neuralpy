@@ -15,7 +15,7 @@ class Predator:
         self.y_multiplier: float = 1.0
         self.speed: int = speed
         self.food: int = 0
-        self.moves_left: int = 10**3
+        self.moves_left: int = 300
         self.color: tuple[int, int, int] = (255, 0, 0)
 
     def can_move(self):
@@ -40,9 +40,8 @@ class Predator:
         self.moves_left -= 1
 
         # Model prediction
-        data = [self.x, self.y, self.x_multiplier,
-                self.y_multiplier, self.moves_left]
-        data_tensor = torch.tensor([data]).float()
+        data: list = [self.x, self.y, self.moves_left]
+        data_tensor: torch.Tensor = torch.tensor([data]).float()
         self.last_output = PREDATOR_MODEL(data_tensor)
 
         # Print the output
@@ -68,11 +67,13 @@ class Predator:
             if abs(self.x - p.x) < 10 and abs(self.y - p.y) < 10:
                 prey.remove(p)
                 self.food += 1
-                self.moves_left = 10**3
+                self.moves_left = 300
 
         output: int = (1 if len(prey) != len_prey0 or len(
             predators) != len_pred0 else 0)
-        return prey, predators, torch.tensor([output]).float()
+        
+        return prey, predators, torch.tensor(
+            [output + self.y_multiplier * self.x_multiplier]).float()
 
 
     # Check if the predator can multiply itself
