@@ -43,16 +43,18 @@ class Predator:
         data: list = [self.x, self.y, self.moves_left]
         data_tensor: torch.Tensor = torch.tensor([data]).float()
         self.last_output = PREDATOR_MODEL(data_tensor)
+        
+        # Use the last output
+        self.x_multiplier *= self.last_output.item()
+        self.y_multiplier *= self.last_output.item()
 
         # Print the output
         print(f"PREDATOR: {self.last_output.item()}")
 
-        # Check the last output
-        self.x_multiplier /= self.last_output.item()
-        self.y_multiplier /= self.last_output.item()
-
         # Draw the predator
-        pygame.draw.circle(SCREEN, self.color, (self.x, self.y), 5)
+        pygame.draw.line(SCREEN, self.color, (self.x, self.y),
+                         (self.x + self.x_multiplier, self.y + self.y_multiplier),
+                         self.food + 5)
 
         # Return the data
         return data_tensor
