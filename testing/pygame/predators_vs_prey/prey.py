@@ -109,7 +109,7 @@ class Prey:
         # Return the correct cboice
         output: int = (0 if len(prey) != len0 or is_eaten == 0 else 1)
         return prey, torch.tensor(
-            [output + self.y_multiplier * self.x_multiplier]
+            [output + self.y_multiplier / self.x_multiplier]
         ).float()
 
 

@@ -47,6 +47,7 @@ class Predator:
         # Use the last output
         self.x_multiplier *= self.last_output.item()
         self.y_multiplier *= self.last_output.item()
+        print(self.last_output.item())
 
         # Draw the predator
         pygame.draw.line(SCREEN, self.color, (self.x, self.y),
@@ -72,7 +73,7 @@ class Predator:
             predators) != len_pred0 else 0)
         
         return prey, predators, torch.tensor(
-            [output + self.y_multiplier * self.x_multiplier]).float()
+            [output + self.y_multiplier / self.x_multiplier]).float()
 
 
     # Check if the predator can multiply itself
