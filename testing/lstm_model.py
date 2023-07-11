@@ -3,9 +3,9 @@ from constants import INPUT_SIZE
 
 
 # Create a model and dataset and train the padded data
-class Model(torch.nn.Module):
+class LSTMModel(torch.nn.Module):
     def __init__(self):
-        super(Model, self).__init__()
+        super(LSTMModel, self).__init__()
         self.lstm = torch.nn.LSTM(INPUT_SIZE, INPUT_SIZE)
         self.linear = torch.nn.Linear(INPUT_SIZE, 1)
         self.sigmoid = torch.nn.Sigmoid()
